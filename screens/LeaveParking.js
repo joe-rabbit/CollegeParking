@@ -6,14 +6,15 @@ import { setDestination } from '../slices/navSlices'
 import tw from "tailwind-react-native-classnames";
 import { selectTravelTimeInformation } from '../slices/navSlices';
 import MapView,{Marker,Polygon,Circle} from 'react-native-maps';
-
+import { selectOTP } from '../slices/navSlices'
 import { selectMinDistance } from '../slices/navSlices';
+import {LogBox} from 'react-native';
+LogBox.ignoreAllLogs();
 const LeaveParking = () => {
  
   const minDistance=useSelector(selectMinDistance);
  const MinLong=useSelector(selectTravelTimeInformation);
- 
-  
+
   console.log(minDistance);
 
   return (

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import {setMinDistance} from '../slices/navSlices'
 import { useDispatch } from 'react-redux';
 import { setTravelTimeInformation } from '../slices/navSlices';
-import { selectOrigin } from '../slices/navSlices';
+import { selectOrigin,setOrigin } from '../slices/navSlices';
 import {getPreciseDistance} from 'geolib';
 class Map extends React.Component {
   constructor(props) {
@@ -25,6 +25,7 @@ reduxState:{
   longitude: 0,}
     };
   }
+
     componentDidMount() {
           fetch('https://gist.githubusercontent.com/jo780-full/c42f65154fac8d3d6e495326211e15b7/raw/b8db40d3c4afaaa254e02c4407caa32ef59c47ce/student.json',{
         method: 'GET',
@@ -69,7 +70,7 @@ reduxState:{
   }
 calculateMinDistance=()=>{
   const dispatch=useDispatch();
-  let min_dist = Number.MAX_VALUE;
+  let min_dist = 20; //if the distance between the user and the spot is less than 20 meters only
   let min_latitude = 0
   let min_longitude = 0
   for(const element in this.state.reports)
@@ -78,6 +79,7 @@ calculateMinDistance=()=>{
       {latitude:this.state.user_latitude,longitude:this.state.user_longitude},
       {latitude:this.state.reports[element].latitude,longitude:this.state.reports[element].longitude}
     ))
+    console.log(distance)
     if(distance<min_dist)
     {
       min_dist=distance;
@@ -117,6 +119,17 @@ calculateMinDistance=()=>{
 
  MapWrapper = ()=>{
   const origin =useSelector(selectOrigin);
+  if(!origin)
+  {
+    const defaultOrigin ={
+      location:{
+        lat:12.909189673007594,
+        lng:77.5665551,
+      },
+      description:"DSCE Parking"
+    }
+    useDispatch(setOrigin(defaultOrigin));
+  }
   return (
 
     <MapView    
@@ -126,8 +139,8 @@ calculateMinDistance=()=>{
         zoomEnabled={true}
     style={tw`h-full w-full`}
     initialRegion={{
-      latitude: origin.location.lat,
-      longitude: origin.location.lng,
+      latitude: origin ? origin.location.lat : 12.909189673007594,
+      longitude: origin ? origin.location.lng : 77.5665551,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     }} 

@@ -1,5 +1,5 @@
 
-
+import * as Location from 'expo-location';
 import { StyleSheet, Image, View,Text,SafeAreaView,ScrollView } from 'react-native'
 import React from 'react'
 import NavOptions from '../Components/NavOptions';
@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GOOGLE_MAPS_APIKEY} from '@env';
 import {setDestination,setOrigin} from "../slices/navSlices";
+import {LogBox} from 'react-native';
+LogBox.ignoreAllLogs();
 const HomeScreen = () => {
   const dispatch=useDispatch();
 
@@ -43,7 +45,7 @@ const HomeScreen = () => {
                             dispatch(setDestination(null))
                         }}
                         query={{
-                            key:GOOGLE_MAPS_APIKEY,
+                            key:"AIzaSyCvNKUwZqIMMijUg3OlgOr5mzCnrwf4l5w",
                             language: 'en',
                         }}
 

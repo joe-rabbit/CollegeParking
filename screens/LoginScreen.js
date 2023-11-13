@@ -1,14 +1,16 @@
 
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import {LogBox} from 'react-native';
+LogBox.ignoreAllLogs();
 
 import { auth } from '../firebase'
-import { useNavigation } from '@react-navigation/core'
 
-const LoginScreen = () => {
+
+const LoginScreen = ({navigation}) => {
     const[email, setEmail]=useState('')
     const[password, setPassword]=useState('')
-    const navigation = useNavigation()
+
     useEffect(()=>{
 const unsubscribe = auth.onAuthStateChanged(user =>{
     if(user){
@@ -38,7 +40,7 @@ auth.createUserWithEmailAndPassword(email, password)
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
-      <Text style={tw`text-2xl font-bold p-5 `}>DSCE Parking </Text>
+      <Text >DSCE Parking </Text>
 <TextInput
 placeholder='Email'
 value={email}
